@@ -1,0 +1,36 @@
+spring:
+    application:
+        name: login
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/login_db
+        username: root
+        password: 1234
+    jpa:
+        generate-ddl: true
+        show-sql: true
+        open-in-view: false
+    sql:
+        init:
+            mode: never
+    upload:
+        location: /home/inkyu/image
+jwt:
+    issuer: kosta-inkyu
+    secret_key: mysecretmysecretmysecretmysecret
+    access_duration: 1800000 # 1800000  # 30분 (30 * 60 * 1000)
+    refresh_duration: 86400000 # 86400000 # 24시간 (24 * 60 * 60 * 1000)
+oauth2:
+    clients:
+        google:
+            client-id: 888863716402-4aaogtdc2ipv2nfndcp7a0ee3bd5hd4t.apps.googleusercontent.com
+            client-secret: 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
+            redirect-uri: http://localhost:3000/oauth/google
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-request-uri: https://www.googleapis.com/oauth2/v3/userinfo
+        kakao:
+            client-id: f240f525b7efb9f1b64e9f0ee8023742
+            client-secret: xTBpn1ldodJyVymwlsG5CzvXJ2BTK3jJ
+            redirect-uri: http://localhost:3000/oauth/kakao
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-request-uri: https://kapi.kakao.com/v2/user/me
