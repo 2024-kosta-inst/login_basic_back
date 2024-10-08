@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.kosta.domain.AuthEnum;
-import com.kosta.domain.OAuthUserInfo;
 import com.kosta.entity.UserAuth;
 
 @Repository
