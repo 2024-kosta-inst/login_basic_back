@@ -78,7 +78,9 @@ public class WebSecurityConfig {
 			auth.requestMatchers(
 				new AntPathRequestMatcher("/api/oauth/**"),
 				new AntPathRequestMatcher("/api/auth/signup"),
-				new AntPathRequestMatcher("/api/popup/qr")
+				new AntPathRequestMatcher("/api/popup/qr"),
+				new AntPathRequestMatcher("/api/post"),
+				new AntPathRequestMatcher("/api/comment")
 			).permitAll()
 			// 그 밖의 다른 요청들은 인증을 통과한(로그인한) 사용자라면 모두 접근할 수 있도록 한다.
 			.anyRequest().authenticated()
