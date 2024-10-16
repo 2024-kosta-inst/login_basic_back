@@ -2,9 +2,13 @@ package com.kosta.service.impl;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -22,6 +26,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.kosta.domain.AuthEnum;
 import com.kosta.domain.OAuthUserInfo;
 import com.kosta.domain.request.SignUpRequest;
+import com.kosta.domain.response.OAuthResponse;
+import com.kosta.domain.response.UserListResponse;
 import com.kosta.entity.User;
 import com.kosta.entity.UserAuth;
 import com.kosta.repository.UserAuthRepository;
@@ -168,5 +174,25 @@ public class UserServiceImpl implements UserService {
 		
 		JsonNode jsonNode = responseEntity.getBody();
 		return jsonNode;
+	}
+
+	@Override
+	public List<UserListResponse> getUserAllInfo() {
+		return userRepository.findAll().stream()
+			.map(user -> {
+				List<UserAuth> oauths = userAuthRepository.findAllByUserId(user.getId());
+				
+				List<OAuthResponse> oauthResponses = oauths.stream()
+                	.map(oauth -> 
+						new OAuthResponse(oauth.getProvider().getAuth(), LocalDateTime.now())
+					).toList();
+
+				return new UserListResponse(
+					user.getId(),
+					oauthResponses,
+					user.getEmail(),
+					user.getName()
+				);
+			}).toList();
 	}
 }

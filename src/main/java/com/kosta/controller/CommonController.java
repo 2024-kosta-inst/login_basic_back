@@ -1,5 +1,7 @@
 package com.kosta.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,8 @@ import com.kosta.domain.AuthEnum;
 import com.kosta.domain.OAuthUserInfo;
 import com.kosta.domain.request.SignUpRequest;
 import com.kosta.domain.response.LoginResponse;
+import com.kosta.domain.response.UserListResponse;
+import com.kosta.entity.User;
 import com.kosta.service.UserService;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -68,5 +72,12 @@ public class CommonController {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
+	}
+
+	@GetMapping("/test/check")
+	public ResponseEntity<?> test() {
+		List<UserListResponse> userList = userService.getUserAllInfo();
+		System.out.println(userList);
+		return ResponseEntity.ok(userList);
 	}
 }
