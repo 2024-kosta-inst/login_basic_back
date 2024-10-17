@@ -6,10 +6,10 @@ import javax.crypto.SecretKey;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import com.kosta.entity.User;
+import com.kosta.repository.UserRepository;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 public class JwtProvider {
-	private final UserDetailsService userDetailsService;
+	private final UserRepository userRepository;
 	// JWT 관련 설정 정보 객체 주입
 	private final JwtProperties jwtProperties;
 	
@@ -93,7 +93,7 @@ public class JwtProvider {
 	public Authentication getAuthenticationByToken(String token) {
 		log.info("[getAuthenticationByToken] 토큰 인증 정보 조회");
 		String userEmail = getUserEmailByToken(token);
-		User user = (User) userDetailsService.loadUserByUsername(userEmail);
+		User user = userRepository.findByEmail(userEmail).get();
 		Authentication authentication = new UsernamePasswordAuthenticationToken(
 			user, token, user.getAuthorities()
 		);

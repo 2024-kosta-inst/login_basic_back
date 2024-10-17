@@ -44,9 +44,6 @@ public class User implements UserDetails {
 	@Column(nullable = false)
 	private String name;
 	
-	@Column(nullable = true)
-	private String password;
-	
 	@CreatedDate
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
@@ -66,12 +63,16 @@ public class User implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// 권한 목록 반환
-		return List.of(new SimpleGrantedAuthority(role.name()));
+		return null;
 	}
 
 	@Override
 	public String getUsername() {
-		// 로그인할 사용자 명을 이메일로 대체
 		return email;
+	}
+
+	@Override
+	public String getPassword() {
+		return null;
 	}
 }

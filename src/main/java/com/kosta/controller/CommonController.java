@@ -77,7 +77,6 @@ public class CommonController {
 	@GetMapping("/test/check")
 	public ResponseEntity<?> test() {
 		List<UserListResponse> userList = userService.getUserAllInfo();
-		System.out.println(userList);
 		return ResponseEntity.ok(userList);
 	}
 }

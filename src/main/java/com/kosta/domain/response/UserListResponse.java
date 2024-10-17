@@ -8,7 +8,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class UserListResponse {
     private Long id;
-    private List<OAuthResponse> oAuth;
     private String email;
     private String name;
+    private List<OAuthResponse> oAuth;
 }

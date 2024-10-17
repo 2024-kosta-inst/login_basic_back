@@ -47,17 +47,14 @@ import lombok.extern.slf4j.Slf4j;
 public class UserServiceImpl implements UserService {
 	private final UserRepository userRepository;
 	private final UserAuthRepository userAuthRepository;
-	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	private final OAuth2Properties oAuth2Properties;
 	private final TokenUtils tokenUtils;
 	
 	@Override
 	public void signUp(SignUpRequest signUpRequest) throws Exception {
-		String encodedPassword = bCryptPasswordEncoder.encode(signUpRequest.getPassword());
 		User user = User.builder()
 				.email(signUpRequest.getEmail())
 				.name(signUpRequest.getName())
-				.password(encodedPassword)
 				.build();
 		userRepository.save(user);
 	}
@@ -189,9 +186,9 @@ public class UserServiceImpl implements UserService {
 
 				return new UserListResponse(
 					user.getId(),
-					oauthResponses,
 					user.getEmail(),
-					user.getName()
+					user.getName(),
+					oauthResponses
 				);
 			}).toList();
 	}
